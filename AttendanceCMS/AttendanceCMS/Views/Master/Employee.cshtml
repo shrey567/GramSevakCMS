@@ -1,0 +1,269 @@
+﻿@model AttendanceCMS.Bll.ViewModels.Master.EmployeeVM
+@{
+    ViewBag.Title = "Employee";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/assets/css/datepicker.css" rel="stylesheet" />
+<link href="~/Content/theme-assets/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<link href="~/Content/theme-assets/assets/pages/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-header start -->
+            <div class="page-header">
+                <div class="row align-items-end">
+                    <div class="col-lg-8">
+                        <div class="page-header-title">
+                            <div class="d-inline">
+                                <h4>Employee Registration</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="page-header-breadcrumb">
+                            <ul class="breadcrumb-title">
+                                <li class="breadcrumb-item">
+                                    <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Master</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Employee</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page-header end -->
+            <!-- Page body start -->
+
+            @using (Html.BeginForm("Employee", "Master", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.UserID);
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <!-- Input Grid card start -->
+                            <div class="card">
+
+                                <div class="card-block">
+                                    <h4 class="sub-title">Add Employee</h4>
+                                    <form>
+                                        <div class="form-group row">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">User Name</label>
+                                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", required = "required", placeholder = "User Here", type = "text" })
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Employee No</label>
+                                                @Html.TextBoxFor(model => model.EmployeeID, new { @class = "form-control", required = "required", placeholder = "Employee No", type = "text" })
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Login Id</label>
+                                                @Html.TextBoxFor(model => model.LoginId, new { @class = "form-control", required = "required", placeholder = "Login id", type = "text" })
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Password</label>
+                                                @Html.TextBoxFor(model => model.Password, new { @class = "form-control", required = "required", placeholder = "Enter password", type = "password" })
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Gender</label>
+                                                @Html.DropDownList("Gender", new List<SelectListItem>
+                                                {
+                                                    new SelectListItem{ Text="Select Gender", Value = "0" },
+                                                    new SelectListItem{ Text="Male", Value = "1" },
+                                                    new SelectListItem{ Text="Female", Value = "2" },
+                                                }, new { @class = "form-control" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Mobile</label>
+                                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", required = "required", placeholder = "Enter mobile", type = "text", minlength = "0", maxlength = "10"})
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Qualification</label>
+                                                @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control", required = "required", placeholder = "Enter qualification", type = "text" })
+                                            </div>
+                                            @*<div class="col-sm-6">
+                                                    <label class="col-form-label">Experience</label>
+                                                    @Html.TextBoxFor(model => model.Experience, new { @class = "form-control", required = "required", placeholder = "Enter Experience", type = "text" })
+                                                </div>*@
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Date of birth</label>
+                                                @*<input type="text" name="birthdate" class="form-control" value="10/24/1984">*@
+                                                @Html.TextBoxFor(model => model.DOB, new { @class = "datepicker form-control", required = "required", placeholder = "Enter Date", type = "text" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Aadhar</label>
+                                                @Html.TextBoxFor(model => model.Aadhar, new { @class = "form-control", required = "required", placeholder = "Enter Aadhar", type = "text" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">PAN</label>
+                                                @Html.TextBoxFor(model => model.PAN, new { @class = "form-control", required = "required", placeholder = "Enter Pan", type = "text" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.RoleID, new { @class = "col-form-label" })
+                                                @Html.DropDownListFor(model => model.RoleID, Model.RoleList, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(model => model.RoleID, "", new { @class = "text-danger" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Address</label>
+                                                @Html.TextAreaFor(model => model.Address, new { @class = "form-control", required = "required", placeholder = "Enter Address", type = "text", row = "5", cols = "5" })
+                                            </div>
+
+
+                                            <div class="col-sm-6">
+                                                <br />
+                                                @Html.CheckBox("IsActive", new { @class = "checkbox-color checkbox-default", type = "checkbox" })
+                                                <label for="checkbox17">
+                                                    Active
+                                                </label>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                @*<div class="card">*@
+
+                                                <label class="col-form-label">Profile Image</label>
+                                                <div class="form-control card-block">
+                                                    <div class="sub-title">Image Upload</div>
+                                                    @*<input type="file" name="files[]" id="filer_input" multiple="multiple">*@
+
+                                                    <div>
+                                                        <img id="user_img" height="100" width="90" style="border:solid" /> 
+                                                    </div>
+                                                    <br/>
+                                                    <input type="file" name="file" id="file" onchange="show(this)" >
+                                                </div>
+
+                                                @*</div>*@
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <br />
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                                <a href="EmployeeList" type="button" class="btn btn-primary">Cancel</a>
+                                            </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Input Grid card end -->
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+            <!-- Page body end -->
+        </div>
+    </div>
+    <!-- Main-body end -->
+</div>
+
+
+<script src="~/Content/theme-assets/assets/pages/jquery.filer/js/jquery.filer.min.js"></script>
+<script src="~/Content/theme-assets/assets/pages/filer/custom-filer.js"></script>
+<script src="~/Content/theme-assets/assets/pages/filer/jquery.fileuploads.init.js"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+       function show(input) {
+          if (input.files && input.files[0]) {
+          var filerdr = new FileReader();
+          filerdr.onload = function (e) {
+             $('#user_img').attr('src', e.target.result);
+          }
+          filerdr.readAsDataURL(input.files[0]);
+       }
+    }
+</script>
+<script src="~/Content/assets/js/datepicker.js"></script>
+<script>
+        var date = new Date();
+        var day = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getFullYear();
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+        var today = day + "/" + month + "/" + year;
+        document.getElementById('DOB').value = today;
+</script>
+
+<script type="text/javascript">
+  $('.datepicker').datepicker({
+      format: 'dd/mm/yyyy',
+      weekStart: 1,
+      color: 'red',
+      pickTime: false
+  }).on('changeDate', function (e) {
+
+      $(this).datepicker('hide');
+      $('.dtpk_drpdwn').hide();
+
+  });
+  //hide  show on hover
+  $('#DOB').focus(function () {
+      $('.dtpk_drpdwn').eq(1).hide();
+  });
+</script>
+<script>
+    $(document).ready(function () {
+        //alert(today);
+        $('#DOB').val(today);
+    });
+   
+</script>
+
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+       
+
+        //$('#trash_badge').click(function () {
+        //    $("#filer_input1").html("");
+        //});
+        $('#filer_input1').change(function () {
+            $("#filer_input1").html("");
+            $("#filer_input1").show();
+            $("#filer_input1").append("<img />");
+
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    //-----------------------------------
+                    // Preview image
+                    //-----------------------------------
+                    $("#filer_input1 img").attr("src", e.target.result);
+                    $("#filer_input1 img").attr("width", "200px");
+                    $("#filer_input1 img").attr("height", "150px");
+                }
+                reader.readAsDataURL($(this)[0].files[0]);
+
+                alert(reader.readAsDataURL($(this)[0].files[0]));
+            }
+        });
+    });
+</script>*@

@@ -1,0 +1,135 @@
+﻿@model AttendanceCMS.Bll.ViewModels.Master.TehsilVM
+@{
+    ViewBag.Title = "Tehsil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/theme-assets/assets/pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme.css" rel="stylesheet" />
+<link href="~/Content/theme-assets/assets/pages/jquery.filer/css/jquery.filer.css" rel="stylesheet" />
+
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-header start -->
+            <div class="page-header">
+                <div class="row align-items-end">
+                    <div class="col-lg-8">
+                        <div class="page-header-title">
+                            <div class="d-inline">
+                                <h4>Tehsil Master</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="page-header-breadcrumb">
+                            <ul class="breadcrumb-title">
+                                <li class="breadcrumb-item">
+                                    <a href="index-1.htm"> <i class="feather icon-home"></i> </a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Master</a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a href="#">Tehsil</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            @using (Html.BeginForm("Tehsil", "Master", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Tehsil_ID);
+
+                <div class="page-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                            <!-- Input Grid card start -->
+                            <div class="card">
+
+                                <div class="card-block">
+                                    <h4 class="sub-title">Add Tehsil</h4>
+                                    <form>
+                                        <div class="form-group row">
+
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Tehsil</label>
+                                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "required", placeholder = "Name Here", type = "text" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label">Tehsil Marathi</label>
+                                                @Html.TextBoxFor(model => model.Name_Mar, new { @class = "form-control", required = "required", placeholder = "Name Marathi Here", type = "text" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.State_ID, new { @class = "col-form-label" })
+                                                @Html.DropDownListFor(model => model.State_ID, Model.StateList, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(model => model.State_ID, "", new { @class = "text-danger" })
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                @Html.LabelFor(m => m.District_ID, new { @class = "col-form-label" })
+                                                @Html.DropDownListFor(model => model.District_ID, Model.DistrictList, new { @class = "form-control", required = "required" })
+                                                @Html.ValidationMessageFor(model => model.District_ID, "", new { @class = "text-danger" })
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <br />
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <a href="TehsilList" type="button" class="btn btn-primary">Cancel</a>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- Input Grid card end -->
+                        </div>
+                    </div>
+                </div>
+            }
+
+
+
+        </div>
+    </div>
+    <!-- Main-body end -->
+</div>
+
+
+<script src="~/Content/theme-assets/assets/pages/jquery.filer/js/jquery.filer.min.js"></script>
+<script src="~/Content/theme-assets/assets/pages/filer/custom-filer.js"></script>
+<script src="~/Content/theme-assets/assets/pages/filer/jquery.fileuploads.init.js"></script>
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+</script>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script type="text/javascript">
+
+    function show(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                $('#user_img').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+

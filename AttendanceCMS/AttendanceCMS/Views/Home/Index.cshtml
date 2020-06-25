@@ -1,0 +1,207 @@
+﻿@model AttendanceCMS.Bll.ViewModels.ChildModel.DashBoardVM
+@{
+    ViewBag.Title = "Attendence";
+}
+
+<style>
+    .rotate_img {
+        animation: spinY 2s linear infinite;
+    }
+
+    @@keyframes spinY {
+        0% {
+            transform: rotateY(0deg);
+        }
+
+        100% {
+            transform: rotateY(360deg);
+        }
+    }
+</style>
+
+<div class="pcoded-inner-content">
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="page-body">
+                <div class="row">
+                    <!-- statustic-card start -->
+                    <div class="col-xl-3 col-md-6" onclick="location.href = '/Report/AttendenceReport';" style="cursor:pointer">
+                        <div class="card bg-c-yellow text-white">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <p class="m-b-5">Attendance</p>
+                                        <h4 class="m-b-0">@Model.Attendence</h4>
+                                    </div>
+                                    <div class="col col-auto text-right">
+                                        <i class="feather icon-user f-50 text-c-yellow"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-xl-3 col-md-6">
+                        <div class="card bg-c-green text-white">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <p class="m-b-5">Income</p>
+                                        <h4 class="m-b-0">$5,852</h4>
+                                    </div>
+                                    <div class="col col-auto text-right">
+                                        <i class="feather icon-credit-card f-50 text-c-green"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="col-xl-3 col-md-6">
+                        <div class="card bg-c-pink text-white">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <p class="m-b-5">Ticket</p>
+                                        <h4 class="m-b-0">42</h4>
+                                    </div>
+                                    <div class="col col-auto text-right">
+                                        <i class="feather icon-book f-50 text-c-pink"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    @*<div class="col-xl-3 col-md-6">
+                        <div class="card bg-c-blue text-white">
+                            <div class="card-block">
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <p class="m-b-5">Orders</p>
+                                        <h4 class="m-b-0">$5,242</h4>
+                                    </div>
+                                    <div class="col col-auto text-right">
+                                        <i class="feather icon-shopping-cart f-50 text-c-blue"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                    <!-- statustic-card start -->
+
+                </div>
+            </div>
+        </div>
+        @*<div id="styleSelector">
+            </div>*@
+
+        @*<input class="form-control" type="date">*@
+        <div class="container-fluid">
+            <!-- Tab panes -->
+            <div class="tab-content row bg-white has-shadow" style="background-color:#fff">
+                <div id="home" class="container tab-pane active" onload="myMap()">
+                    <div class="row bg-white" style="position:relative; height:680px;padding-top:15px;">
+                        <p id="wait" style="display:none;position:absolute;top:35%;left:50%;">
+                            <img class="rotate_img" src="~/Content/assets/images/marker24.png">
+                        </p>
+                        <div class="col-sm-11">
+                            <h3>Attendance Details</h3>
+                            <input type="hidden" value="21.1458" id="deflat" />
+                            <input type="hidden" value="79.0882" id="deflang" />
+                        </div>
+                        <div class="col-sm-1"><span><input type="button" style="margin-bottom:10px" class="btn btn-success btn-sm" id="refresh" value="Show" /></span></div>
+
+                        <div class="col-12 bg-white has-shadow" id="googleMap" style="width:1200px; height:600px;">
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6eobSmi6nEV2h0TkRolQ5x6JjShuaHEs&callback=myMap" type="text/javascript"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#refresh').click(function () {
+            myMap2();
+        });
+    })
+    function myMap2() {
+        $("#wait").css("display", "block");
+        $("#googleMap").css("display", "none");
+        $.ajax({
+            type: "get",
+            url: "/Home/UserLocationList",
+            //url: "http://dummy.restapiexample.com/api/v1/employees",
+
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+
+                console.log(data);
+
+                $("#wait").css("display", "none");
+                $("#googleMap").css("display", "block");
+                if (data.length == 0) {
+                    var map = new google.maps.Map(document.getElementById('googleMap'), {
+                        zoom: 10,
+                        center: new google.maps.LatLng($('#deflat').val(), $('#deflang').val()),
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    });
+
+                }
+                var map = new google.maps.Map(document.getElementById('googleMap'), {
+
+                    center: new google.maps.LatLng(data[0].InLat, data[0].InLong),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+
+                var infowindow = new google.maps.InfoWindow();
+                bounds = new google.maps.LatLngBounds();
+                var marker, i;
+                // Get Addres
+                for (i = 0; i < data.length; i++) {
+                    marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(data[i].InLat, data[i].InLong),
+                        map: map,
+
+                        icon: {
+                            labelOrigin: new google.maps.Point(16, 65),
+                            url: "../Content/assets/images/marker24.png"
+                        },
+                        label: {
+                            text: data[i].UserName,
+                            color: "black",
+                            fontWeight: "bold",
+                            fontSize: "13px",
+                            margin: "55px"
+                        }
+                    });
+
+                    loc = new google.maps.LatLng(data[i].InLat, data[i].InLong),
+
+                    bounds.extend(loc);
+
+                    google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                        return function () {
+                            infowindow.setContent('<div class=infowindow> <h3 style="font-size:20px;">' + data[i].UserName + '</h3><p><b>In Time:</b>' + data[i].InTime + '</p></div>');
+                            infowindow.open(map, marker);
+                        }
+                    })(marker, i));
+
+
+                }
+                map.fitBounds(bounds);
+                map.panToBounds(bounds);
+
+            }
+
+        });
+    }
+
+</script>
