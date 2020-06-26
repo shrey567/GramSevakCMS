@@ -6,6 +6,7 @@
 
     $('#datatable').DataTable({
         "pageLength": 10,
+        "order": [[1, "desc"]],
         "ajax": {
             "url": "/Report/getAttendenceReport",
             "data": {
@@ -41,6 +42,7 @@ function Datatable() {
 
     $('#datatable').DataTable({
         "pageLength": 10,
+        "order": [[1, "desc"]],
         "ajax": {
             "url": "/Report/getAttendenceReport",
             "data": {
