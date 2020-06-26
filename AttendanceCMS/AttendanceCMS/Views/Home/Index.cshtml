@@ -1,6 +1,6 @@
 ﻿@model AttendanceCMS.Bll.ViewModels.ChildModel.DashBoardVM
 @{
-    ViewBag.Title = "Attendence";
+    ViewBag.Title = "Dashboard";
 }
 
 <style>
@@ -189,7 +189,7 @@
 
                     google.maps.event.addListener(marker, 'click', (function (marker, i) {
                         return function () {
-                            infowindow.setContent('<div class=infowindow> <h3 style="font-size:20px;">' + data[i].UserName + '</h3><p><b>In Time:</b>' + data[i].InTime + '</p></div>');
+                            infowindow.setContent('<div class=infowindow> <h3 style="font-size:20px;">' + data[i].UserName + '</h3><p><b>Date :</b>' + data[i].Date + '</p><p><b>In Time:</b>' + data[i].InTime + '</p></div>');
                             infowindow.open(map, marker);
                         }
                     })(marker, i));

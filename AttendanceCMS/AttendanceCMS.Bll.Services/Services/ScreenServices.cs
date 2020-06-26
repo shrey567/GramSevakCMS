@@ -182,7 +182,8 @@ namespace AttendanceCMS.Bll.Services.Services
                                           UserName = UM.UserName,
                                           InTime = UA.InDateTime,
                                           InLat = UA.InLat,
-                                          InLong = UA.InLong
+                                          InLong = UA.InLong,
+                                          Date = UA.InDateTime,
                                       }).ToList();
 
 
@@ -194,6 +195,7 @@ namespace AttendanceCMS.Bll.Services.Services
                         InTime = Convert.ToDateTime(x.InTime).ToString("hh:mm tt"),
                         InLat = x.InLat.ToString(),
                         InLong = x.InLong.ToString(),
+                        Date = Convert.ToDateTime(x.Date).ToString("dd/MM/yyyy"),
                     });
                 }
             }
